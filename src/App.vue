@@ -1,8 +1,8 @@
 <template>
   <img src="./assets/logo.png" alt="Vue logo">
-  <Contador titulo="Contador123"></Contador>
-  <Contador titulo="Contador2"/>
-  <Contador titulo="Contador3"/>
+  <Contador titulo="Contador1" :valor="5" />
+  <Contador titulo="Contador2" :valor="calcularValor()" />
+  <Contador titulo="Contador3" />
 </template>
 
 <script>
@@ -12,7 +12,12 @@ export default {
   name: 'App',
   components: {
     Contador
-  }
+  },
+  methods: {
+    calcularValor() {
+      return 5 + 5 + 10
+    }
+  },
 }
 </script>
 
@@ -24,5 +29,11 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  
 }
+
+*{
+  background-color: #E6D3A3;
+}
+
 </style>
