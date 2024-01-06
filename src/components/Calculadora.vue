@@ -76,11 +76,12 @@ export default {
     limpiar() {
       this.operacion = "";
       console.log("esto obvio que funciona");
+      this.check = false;
     },
 
     borrar() {
       this.operacion = this.operacion.slice(0, -1);
-      this.check = false;
+      
     },
     
   },
