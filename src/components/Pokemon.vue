@@ -4,8 +4,8 @@
     
     <div class="poke">
     <h1>Buscar Por ID</h1>
-      <input v-model="numero" type="number" />
-      <button @click="consumirPoke">Enviar</button>
+      <input v-model="numero" @keyup.enter="consumirPoke" type="number" />
+      <button disabled>Presione Enter</button>
     </div>
   </div>
   <div class="container">
@@ -44,6 +44,9 @@ export default {
       this.weight = weight;
     },
   },
+  watch:{
+
+  }
 };
 </script>
 
