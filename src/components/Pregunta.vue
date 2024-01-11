@@ -1,11 +1,6 @@
 <template>
-  <img
-    class=""
-    src="../assets/obsidian.png"
-    alt=""
-    width="50px"
-    height="50px"
-  />
+  <img v-if="img !== null" class="" :src="imagen" alt="Img" />
+  <img src="" alt="" />
   <div class="dark">
     <div class="container">
       <div class="pregunta">
@@ -13,9 +8,11 @@
         <p>
           Recuerda que debes tener terminar con el signo de interrogacion (?)
         </p>
-        <h2>{{ pregunta }}</h2>
-        <h1>SI, NO.....</h1>
-        <h1>{{respuesta}}</h1>
+
+        <div v-if="preguntaValida == true">
+          <h2>{{ pregunta }}</h2>
+          <h1>{{ respuesta }}</h1>
+        </div>
       </div>
     </div>
   </div>
@@ -25,28 +22,39 @@
 export default {
   data() {
     return {
-      pregunta: "Voy a ser millonario?",
-      respuesta: "Respuesta",
+      pregunta: null,
+      respuesta: null,
       imagen: null,
+      preguntaValida: false,
     };
   },
   methods: {
     async consumirAPI() {
-        // const {answer, image} = await fetch("https://yesno.wtf/api/?force=maybe").then(r => r.json());
-        const {answer, image} = await fetch("https://yesno.wtf/api").then(r => r.json());
-        this.respuesta = answer;
-        this.imagen = image;
-        
-        console.log(answer);
-        console.log(image);
+      this.respuesta = "procesando.";
+      this.respuesta = "procesando..";
+      this.respuesta = "procesando...";
+      this.respuesta = "procesando....";
+      const {answer, image} = await fetch("https://yesno.wtf/api/?force=maybe").then(r => r.json());
+      // const { answer, image } = await fetch("https://yesno.wtf/api").then((r) =>
+      //   r.json()
+      // );
+      this.respuesta = answer === "yes" 
+        ? "SI!" : answer === "maybe" 
+        ? "Talvez ???" : "No";
+      this.imagen = image;
+      
+      console.log(answer);
+      console.log(image);
     },
   },
   watch: {
     async pregunta(value, oldValue) {
+      this.preguntaValida = false;
       console.log(value);
       console.log(oldValue);
       if (!value.includes("?")) return;
       this.consumirAPI();
+      this.preguntaValida = true;
     },
   },
 };
