@@ -1,52 +1,16 @@
 <template>
-  <!-- <PokemonPage /> -->
-
-  <div class="container" v-if="mostrarJuego">
-    <h1>Casino Pokemon</h1>
-    <h2>Puntaje: {{ puntaje }}</h2>
-    <h2>Intentos: {{ intentos }}</h2>
-
-
-  </div>
-
-  <div class="juego" v-if="mostrarJuego">
-    <Imagen :texto="texto1" :urlImg="url1" />
-    <Imagen :texto="texto2" :urlImg="url2" />
-    <Imagen :texto="texto3" :urlImg="url3" />
-  </div>
-
-  <div class="container" v-if="mostrarJuego">
-    <button @click="jugar">Jugar</button>
-  </div>
-  <div v-if="mostarGanador">
-    <h1>
-      Puntaje: {{ puntaje }}
-    </h1>
-    <h1>
-      Felicitaciones has ganado un premio de $10.000,00
-    </h1>
-    <button @click="reiniciar">Reiniciar</button>
-  </div>
-  <div v-if="mostrarPerdedor">
-    <h1>
-      Has utilizado tus 5 intentos
-    </h1>
-    <h1>
-      El juego ha termindo, intentalo nuevamente
-    </h1>
-    <button @click="reiniciar">Reiniciar</button>
-  </div>
+  <PokemonPage />
 </template>
 
 <script>
 import Imagen from "./components/Imagen.vue";
 
-// import PokemonPage from "./pages/PokemonPage.vue";
+import PokemonPage from "./pages/PokemonPage.vue";
 
 export default {
   name: "App",
   components: {
-    // PokemonPage,
+    PokemonPage,
     Imagen,
   },
   data() {
@@ -79,24 +43,32 @@ export default {
       this.texto3 = data3.answer;
       this.url3 = data3.image;
 
-      this.evaluarResultado()
+      this.evaluarResultado();
     },
     async consumirAPI() {
       return await fetch("https://yesno.wtf/api").then((r) => r.json());
     },
     evaluarResultado() {
-      this.intentos++
-      if (this.texto1 == "yes" && this.texto2 == "yes" && this.texto3 == "yes") {
+      this.intentos++;
+      if (
+        this.texto1 == "yes" &&
+        this.texto2 == "yes" &&
+        this.texto3 == "yes"
+      ) {
         this.puntaje += 5;
-      } else
-        if
-          ((this.texto1 === "yes" && this.texto2 === "yes") ||
-          (this.texto2 === "yes" && this.texto3 === "yes") ||
-          (this.texto1 === "yes" && this.texto3 === "yes")) {
-          this.puntaje += 2;
-        } else if (this.texto1 === "yes" || this.texto2 === "yes" || this.texto3 === "yes") {
-          this.puntaje += 1;
-        }
+      } else if (
+        (this.texto1 === "yes" && this.texto2 === "yes") ||
+        (this.texto2 === "yes" && this.texto3 === "yes") ||
+        (this.texto1 === "yes" && this.texto3 === "yes")
+      ) {
+        this.puntaje += 2;
+      } else if (
+        this.texto1 === "yes" ||
+        this.texto2 === "yes" ||
+        this.texto3 === "yes"
+      ) {
+        this.puntaje += 1;
+      }
 
       if (this.puntaje >= 10) {
         this.mostrarJuego = false;
@@ -111,18 +83,21 @@ export default {
       }
     },
     reiniciar() {
-      this.puntaje = 0
-      this.intentos = 0
-      this.url1 = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/1.svg"
-      this.url2 = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/2.svg"
-      this.url3 = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/3.svg"
-      this.texto1 = "XXXXXXXXXXXXXXXXXXXXX"
-      this.texto2 = "XXXXXXXXXXXXXXXXXXXXX"
-      this.texto3 = "XXXXXXXXXXXXXXXXXXXXX"
-      this.mostarGanador = false
-      this.mostrarPerdedor = false
-      this.mostrarJuego = true
-    }
+      this.puntaje = 0;
+      this.intentos = 0;
+      this.url1 =
+        "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/1.svg";
+      this.url2 =
+        "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/2.svg";
+      this.url3 =
+        "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/3.svg";
+      this.texto1 = "XXXXXXXXXXXXXXXXXXXXX";
+      this.texto2 = "XXXXXXXXXXXXXXXXXXXXX";
+      this.texto3 = "XXXXXXXXXXXXXXXXXXXXX";
+      this.mostarGanador = false;
+      this.mostrarPerdedor = false;
+      this.mostrarJuego = true;
+    },
   },
 };
 </script>
@@ -155,17 +130,13 @@ button {
   grid-column: span 4;
 }
 
-
-.juego{
+.juego {
   display: grid;
   justify-content: center;
   grid-template-columns: repeat(3, 250px);
-  
-
 }
-img, label{
+img,
+label {
   grid-column: span 1;
 }
-
-
 </style>

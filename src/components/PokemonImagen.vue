@@ -49,6 +49,7 @@ img {
 .container {
   display: flex;
   justify-content: center;
-  height: 300px;
+  align-items: center;
+  height: 350px;
 }
 </style>
