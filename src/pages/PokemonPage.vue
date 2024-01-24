@@ -1,12 +1,12 @@
 <template>
-  
   <h1 v-if="pokemonGanador == null">Cargando......</h1>
   <div v-if="pokemonGanador !== null">
-  <!-- <div> -->
-    <h1>Adivina el Pokemon</h1>
+    
+    <!-- <div> -->
+    <h1 class="text-3xl font-bold underline">Adivina el Pokemon</h1>
     <PokemonImagenVue :pokemonId="pokemonGanador.id" :showPokemon="mostrarPokemon" />
     <!-- <PokemonImagenVue :pokemonId="6" :showPokemon="false" /> -->
-    <PokemonOptionsVue @seleccion="revisarClick" :pokemones="pokemonArr" />
+    <PokemonOptionsVue @seleccion="revisarClick" :pokemones="pokemonArr" :ganador="mostrarPokemon" />
   </div>
 </template>
 
@@ -57,16 +57,21 @@ export default {
       console.log(arreglo);
       this.pokemonArr = arreglo;
       console.log(this.pokemonArr[0])
-      
+
       const indiceGanador = Math.floor(Math.random() * 4);
       this.pokemonGanador = this.pokemonArr[indiceGanador];
-      console.log(this.pokemonGanador.id);
+      console.log("Id encontrado: " + this.pokemonGanador);
     },
-    revisarClick(seleccion){
+    revisarClick(seleccion) {
       console.log("Revisar click", seleccion[0]);
-      console.log(this.pokemonGanador);
-      if (this.pokemonGanador == seleccion) {
+      console.log(this.pokemonGanador.id);
+
+      if (this.pokemonGanador.id === seleccion[0]) {
+
+        console.log("paso");
         this.mostrarPokemon = true
+
+        
       }
     }
   },
@@ -75,6 +80,7 @@ export default {
       pokemonArr: [],
       pokemonGanador: null,
       mostrarPokemon: false,
+      
     };
   },
 };

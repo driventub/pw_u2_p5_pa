@@ -1,15 +1,16 @@
 <template>
   <div class="f-container">
-    <ul >
+    
+    <ul v-if="!ganador">
       <li @click="this.$emit('seleccion', [pokemon.id,100])" v-for="pokemon in pokemones" :key="pokemon.id">{{pokemon.nombre}}</li>
+    </ul>
+    <ul v-else class="disabled">
+      <li v-for="pokemon in pokemones" :key="pokemon.id" disabled>{{pokemon.nombre}}</li>
     </ul>
   </div>
 </template>
 
 <script>
-
-
-
 
 export default {
   props: {
@@ -17,6 +18,10 @@ export default {
       type: Array,
       required: true,
     },
+    ganador:{
+      type: Boolean,
+      required: true,
+    }
     
   },
   mounted() {
@@ -44,5 +49,9 @@ li {
 
 li:hover {
   background-color: rgba(0, 0, 0, 0.1);
+}
+
+.disabled{
+  pointer-events: none;
 }
 </style>
